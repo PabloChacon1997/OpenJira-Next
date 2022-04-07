@@ -4,7 +4,9 @@ import { createContext } from 'react';
 import { Entry } from '../../interfaces';
 
 interface ContextProps {
- entries: Entry[]; // TODO: Falta el tipo de dato del arreglo
+ entries: Entry[];
+//  Methods
+  addNewEntry: (description: string) => void;
 }
 
 export const EntriesContext = createContext({} as ContextProps);

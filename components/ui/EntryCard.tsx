@@ -1,5 +1,5 @@
 import { Card, CardActionArea, CardActions, CardContent, Typography } from '@mui/material';
-import { FC } from 'react';
+import { DragEvent, FC } from 'react';
 import { Entry } from '../../interfaces';
 
 
@@ -8,10 +8,23 @@ interface Props {
 }
 
 export const EntryCard:FC<Props> = ({ entry }) => {
+
+  const onDragStart = (event: DragEvent) => {
+    event.dataTransfer.setData('text', entry._id);
+
+    // TODO: Modificar el estado para identificar que estoy haciendo drag
+  }
+
+  const onDragEnd = () => {
+    // TODO: Cancelar elonDrag
+  }
+
   return (
     <Card
       sx={{ marginBottom: 1 }}
-      // TODO: Eventos de drag
+      draggable
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
     >
       <CardActionArea>
         <CardContent>

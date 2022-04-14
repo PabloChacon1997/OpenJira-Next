@@ -11,6 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { dbEntries } from '../../database';
 import { EntriesContext } from '../../context/entries';
 import { dateFunctions } from '../../utils';
+import { useRouter } from 'next/router';
 
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished'];
@@ -21,7 +22,9 @@ interface Props {
 
 export const EntryPage:FC<Props> = ( { entry } ) => {
 
-  const { updateEntry } = useContext(EntriesContext);
+  const { updateEntry, deleteEntry } = useContext(EntriesContext);
+
+  const router = useRouter();
 
   const [inputValue, setInputValue] = useState(entry.description);
   const [status, setStatus] = useState<EntryStatus>(entry.status);
@@ -35,6 +38,11 @@ export const EntryPage:FC<Props> = ( { entry } ) => {
 
   const onStatusChange = (event: ChangeEvent<HTMLInputElement>) => {
     setStatus(event.target.value as EntryStatus);
+  }
+
+  const onDelete = () => {
+    deleteEntry(entry, true);
+    router.push('/');
   }
 
   const onSave = () => {
@@ -110,6 +118,7 @@ export const EntryPage:FC<Props> = ( { entry } ) => {
         </Grid>
       </Grid>
       <IconButton
+        onClick={onDelete}
         sx={{ 
           position: 'fixed',
           bottom: 30,
